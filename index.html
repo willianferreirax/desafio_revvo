@@ -234,8 +234,13 @@
         .slide {
             width: 100%;
             height: 400px;
+            display: none;
             justify-content: center;
             align-items: center;
+        }
+
+        .slide:nth-child(1) {
+            display: block;
         }
 
         .slide-image {
@@ -420,15 +425,26 @@
                     <button class="slide-btn">Ver curso</button>
                 </div>
             </div>
+            <div class="slide">
+                <img src="home-modal.jpg" alt="" class="slide-image" />
+                <div class="text-box">
+                    <h2 class="slide-title">Titulo</h2>
+                    <p class="slide-text">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus dolor ad nostrum fugit ipsum voluptatibus et mollitia asperiores voluptatem corrupti.  
+                    </p>
+
+                    <button class="slide-btn">Ver curso</button>
+                </div>
+            </div>
         </div>
 
-        <button class="prev">
+        <button class="prev" onclick="changeSlide(-1)">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="white">
                 <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6,6,6Z" />
             </svg>
         </button>
 
-        <button class="next">
+        <button class="next" onclick="changeSlide(1)">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="white">
                 <path d="M9,6l6,6-6,6-1.41-1.41L12.17,12,7.59,7.41Z" />
             </svg>
@@ -436,8 +452,6 @@
     </div>
 
     <div class="dots-container">
-        <span class="dot active"></span>
-        <span class="dot"></span>
     </div>
 
     <div class="course-container">
@@ -543,5 +557,68 @@
             Copyright 2017 - All rights reserved
         </p>
     </div>
+
+    <script>
+        let currentSlide = 0;
+
+        const slides = document.querySelectorAll(".slide");
+  
+        generateDots();
+  
+        const dots = document.querySelectorAll(".dot");
+
+        function generateDots(){
+
+            const dotsContainer = document.querySelector(".dots-container");
+
+            slides.forEach((_, index) => {
+                const dot = document.createElement("span");
+                dot.classList.add("dot");
+
+                if (index === 0) dot.classList.add("active");
+                
+                dot.addEventListener("click", () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+        }
+  
+        function changeSlide(direction) {
+            currentSlide += direction;
+    
+            if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            }
+            
+            showSlide(currentSlide);
+            updateDots();
+        }
+  
+        function goToSlide(index) {
+            currentSlide = index;
+            showSlide(currentSlide);
+            updateDots();
+        }
+  
+        function updateDots() {
+            dots.forEach((dot) => dot.classList.remove("active"));
+            dots[currentSlide].classList.add("active");
+        }
+  
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? "block" : "none";
+            });
+        }
+  
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+            updateDots();
+        }
+  
+        setInterval(nextSlide, 3000);
+    </script>
 </body>
 </html>
