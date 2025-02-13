@@ -10,8 +10,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            color: #555
         }
 
+        hr {
+            border: 0;
+            border-top: 1px solid #b9b8b8;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
         .icon-wrapper {
             padding: 12px;
             display: flex;
@@ -138,18 +147,19 @@
             border-radius: 5px;
             height: 90%;
             width: 30%;
-            color: #fff;
         }
 
         .slide-title {
             font-size: 36px;
             margin-bottom: 10px;
+            color: #fff;
         }
 
         .slide-text {
             font-size: 16px;
             line-height: 1.5em;
             margin-bottom: 20px;
+            color: #fff;
         }
 
         .card-btn,
@@ -288,13 +298,49 @@
             flex-direction: column;
         }
 
+        .footer {
+            padding: 45px 70px 15px 70px;
+        }
+
+        .footer-container {
+            display: flex; 
+            justify-content: space-between
+        }
+
+        .slogan {
+            word-wrap: break-word; 
+            max-width: 700px
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .sub-footer {
+            background-color: antiquewhite;
+            padding-left: 70px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            font-size: 12px;
+        }
+
+        .footer-logo img {
+            max-height: 50px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
     </style>
 
 </head>
 <body>
     <header class="header">
-        <div>
-            <img src="img/logo.png" alt="Logo">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
         </div>
 
         <div class="header-right">
@@ -323,7 +369,7 @@
                 <div class="profile">
                     <img src="profile-photo.jpg" alt="perfil" class="profile-img"/>
                     <div class="user-info">
-                        <span class="welcome-text">Welcome back!</span>
+                        <span class="welcome-text">Seja bem-vindo</span>
                         <span class="username">John Doe</span>
                     </div>
                 </div>
@@ -403,27 +449,21 @@
         </div>
     </div>
 
-    <footer style="padding: 45px">
-        <div style="display: flex; justify-content: space-between">
+    <footer class="footer">
+        <div class="footer-container">
             <div>
-                <div style="margin-bottom: 20px;">
+                <div class="logo" style="margin-bottom: 20px;">
                     <img src="logo.png" alt="Logo" style="filter: grayscale(100%);"/>
                 </div>
 
-                <p style="word-wrap: break-word; max-width: 700px">
+                <p class="slogan">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
                     esse nihil aperiam fuga velit sint accusamus magnam quidem officia
                     odio.
                 </p>
             </div>
 
-            <div
-                style="
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 30px;
-                "
-            >
+            <div class="footer-info">
                 <div style="margin-right: 100px">
                     <h3 style="margin-bottom: 20px">
                         //Contato
@@ -457,13 +497,7 @@
     </footer>
 
     <div>
-        <p
-            style="
-                background-color: antiquewhite;
-                padding: 45px;
-                font-size: 12px;
-            "
-        >
+        <p class="sub-footer">
             Copyright 2017 - All rights reserved
         </p>
     </div>
