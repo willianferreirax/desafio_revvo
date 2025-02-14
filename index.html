@@ -63,7 +63,7 @@
             padding: 10px 40px 10px 15px;
             border-radius: 20px;
             border: 1px solid #ccc;
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: bold;
             background-color: #eeeeee;
         }
@@ -101,17 +101,17 @@
         }
 
         .welcome-text {
-            font-size: 12px;
+            font-size: 0.75rem;
             color: #888;
         }
 
         .username {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 0.875rem;
         }
 
         .dropdown-arrow {
-            font-size: 18px;
+            font-size: 1.125rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -150,13 +150,13 @@
         }
 
         .slide-title {
-            font-size: 36px;
+            font-size: 2rem;
             margin-bottom: 10px;
             color: #fff;
         }
 
         .slide-text {
-            font-size: 16px;
+            font-size: 1rem;
             line-height: 1.5em;
             margin-bottom: 20px;
             color: #fff;
@@ -167,7 +167,7 @@
             width: 100%;
             background: rgb(15, 175, 15);
             color: white;
-            font-size: 16px;
+            font-size: 1rem;
             text-transform: uppercase;
             font-weight: bold;
             padding: 10px 15px;
@@ -176,7 +176,6 @@
             cursor: pointer;
             transition: 0.3s;
             position: relative;
-            bottom: 20px;
             margin-top: auto;
         }
 
@@ -288,12 +287,12 @@
 
         .card h3 {
             margin: 10px 0;
-            font-size: 18px;
+            font-size: 1.125rem;
         }
 
         .card-text {
             color: #777;
-            font-size: 14px;
+            font-size: 0.875rem;
             margin-bottom: 15px;
         }
 
@@ -329,7 +328,7 @@
             padding-left: 70px;
             padding-bottom: 10px;
             padding-top: 10px;
-            font-size: 12px;
+            font-size: 0.75rem;
         }
 
         .footer-logo img {
@@ -347,12 +346,175 @@
             background: none;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 1.125rem;
             font-weight: bold;
             text-align: center;
             color: #555;
             cursor: pointer;
             transition: 0.3s;
+        }
+
+        .footer-contact{
+            margin-right: 100px;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-social {
+            margin-bottom: 20px
+        }
+
+        @media (max-width: 1024px) {
+
+            .dots-container {
+                display: none;
+            }
+
+            .header {
+                padding: 25px;
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-bar input {
+                width: 250px;
+                height: 40px;
+            }
+
+            .text-box {
+                width: 40%;
+            }
+
+            .slider .slide {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            html {
+                font-size: 12px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+
+            .header-right {
+                margin-top: 15px;
+            }
+
+            .logo img {
+                height: 30px;
+            }
+
+            .search-bar input {
+                width: 200px;
+                height: 35px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .text-box {
+                width: 50%;
+                transform: translateX(21%);
+                left: 0px;
+            }
+
+            .add-course {
+                font-size: 1rem;
+            }
+
+            .footer {
+                padding: 25px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 0px;
+            }
+
+            .footer-contact {
+                margin-top: 30px;
+                margin-bottom: 30px;
+                margin-right: 0;
+                text-align: center;
+            }
+
+            .footer-logo {
+                align-items: center;
+            }
+
+            .slogan {
+                text-align: center;
+            }
+
+            .sub-footer {
+                padding-left: 0px;
+                text-align: center;
+            }
+
+            .footer-social {
+                margin-bottom: 0px
+            }
+
+            .footer-social h3 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .search-bar input {
+                width: 180px;
+                height: 35px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .text-box {
+                width: 60%;
+            }
+
+            .add-course {
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            html {
+                font-size: 10px;
+            }
+
+            .header {
+                padding: 10px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .text-box {
+                width: 70%;
+            }
+
         }
 
     </style>
@@ -497,7 +659,7 @@
                         />
                     </g>
                 </svg>
-                <span style="margin-top: 20px; font-size: 24px; font-weight: bold">
+                <span style="margin-top: 20px; font-size: 1.5rem; font-weight: bold">
                     ADICIONAR <br />
                     CURSO
                 </span>
@@ -507,7 +669,7 @@
 
     <footer class="footer">
         <div class="footer-container">
-            <div>
+            <div class="footer-logo">
                 <div class="logo" style="margin-bottom: 20px;">
                     <img src="logo.png" alt="Logo" style="filter: grayscale(100%);"/>
                 </div>
@@ -520,7 +682,7 @@
             </div>
 
             <div class="footer-info">
-                <div style="margin-right: 100px">
+                <div class="footer-contact">
                     <h3 style="margin-bottom: 20px">
                         //Contato
                     </h3>
@@ -529,8 +691,8 @@
                     <p>contato@leolearning.com</p>
                 </div>
 
-                <div>
-                    <h3 style="margin-bottom: 20px">
+                <div class="footer-social">
+                    <h3>
                         //Redes Sociais
                     </h3>
 
