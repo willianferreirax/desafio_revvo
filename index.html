@@ -287,7 +287,7 @@
 
         .card h3 {
             margin: 10px 0;
-            font-size: 1.125rem;
+            font-size: 1.5rem;
         }
 
         .card-text {
@@ -365,6 +365,47 @@
 
         .footer-social {
             margin-bottom: 20px
+        }
+
+        #visit_dialog {
+            border: 0;
+            border-radius: 10px;
+            width: 70vw;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -70%);
+            overflow: visible;
+        }
+
+        #visit_dialog img {
+            height: 300px; 
+            width: 100%;  
+            border-radius: 10px 10px 0 0;
+        }
+
+        .visit-dialog-content {
+            padding: 50px 20%;
+        }
+
+        #visit_dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-close-btn {
+            display: flex;
+            border-radius: 50%; 
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .modal-close-btn svg {
+            width: 25px;
         }
 
         @media (max-width: 1024px) {
@@ -515,6 +556,24 @@
                 width: 70%;
             }
 
+            #visit_dialog {
+                width: 90vw;
+                transform: translate(-50%, -50%);
+            }
+
+            .modal-close-btn {
+                top: -10px;
+                right: -10px;
+            }
+
+            .modal-close-btn svg {
+                width: 10px;
+            }
+
+            .visit-dialog-content {
+                padding: 20px 10%;
+            }
+
         }
 
     </style>
@@ -600,13 +659,13 @@
             </div>
         </div>
 
-        <button class="prev" onclick="changeSlide(-1)">
+        <button class="prev">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="white">
                 <path d="M15.41,16.59L10.83,12l4.58-4.59L14,6l-6,6,6,6Z" />
             </svg>
         </button>
 
-        <button class="next" onclick="changeSlide(1)">
+        <button class="next">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="white">
                 <path d="M9,6l6,6-6,6-1.41-1.41L12.17,12,7.59,7.41Z" />
             </svg>
@@ -720,7 +779,56 @@
         </p>
     </div>
 
+    <dialog id="visit_dialog">
+        <div class="modal-close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
+                <path fill="#FA8072" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+                <path fill="#FA8072" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+        </div>
+        <img  src="home.jpg" alt="imagem modal" />
+        <div class="visit-dialog-content">
+            <h3 style="text-align: center; font-size: 2.2rem; color: #333;">
+                Lorem ipsum dolor sit amet.
+            </h3>
+            <p style="text-align: center; color: #777; margin: 20px 0;">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum laboriosam, quasi minus vero minima natus tempora corrupti non impedit voluptatem?
+            </p>
+            <div style="display: flex; justify-content: center;">
+                <button class="card-btn" style="background-color: rgb(20, 163, 219); padding: 15px 20px !important; width: 60%;">
+                    INSCREVA-SE
+                </button>
+            </div>
+        </div>
+    </dialog>
+
     <script>
+
+        const modal = document.querySelector('#visit_dialog');
+
+        const modalCloseBtn = document.querySelector('.modal-close-btn');
+
+        modalCloseBtn.addEventListener('click', () => modal.close());
+
+        //------
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!localStorage.getItem("modal_shown")) {
+                modal.showModal();
+                localStorage.setItem("modal_shown", "true");
+            }
+        });
+
+        const prevSlideBtn = document.querySelector(".prev");
+
+        prevSlideBtn.addEventListener("click", () => changeSlide(-1));
+
+        const nextSlideBtn = document.querySelector(".next");
+
+        nextSlideBtn.addEventListener("click", () => changeSlide(1));
+
+        //------
+
         let currentSlide = 0;
 
         const slides = document.querySelectorAll(".slide");
