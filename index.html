@@ -367,7 +367,7 @@
             margin-bottom: 20px
         }
 
-        #visit_dialog {
+        dialog {
             border: 0;
             border-radius: 10px;
             width: 70vw;
@@ -388,7 +388,7 @@
             padding: 50px 20%;
         }
 
-        #visit_dialog::backdrop {
+        dialog::backdrop {
             background-color: rgba(0, 0, 0, 0.7);
         }
 
@@ -406,6 +406,10 @@
 
         .modal-close-btn svg {
             width: 25px;
+        }
+
+        #create_course_dialog {
+            width: 50vw;
         }
 
         @media (max-width: 1024px) {
@@ -556,7 +560,7 @@
                 width: 70%;
             }
 
-            #visit_dialog {
+            dialog {
                 width: 90vw;
                 transform: translate(-50%, -50%);
             }
@@ -802,15 +806,115 @@
         </div>
     </dialog>
 
+    <dialog id="create_course_dialog" style=" overflow: visible;">
+        <div class="modal-close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
+                <path fill="#FA8072" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+                <path fill="#FA8072" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+        </div>
+        <div style="padding: 30px;">
+            <h3 style="font-size: 1.5rem; color: #333;">
+                Crie seu curso
+            </h3>
+            <div>
+                <input id='course_name' type="text" placeholder="Nome do curso" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <input id="course_description" type="text" placeholder="Descrição" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <input id="course_image" type="file" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <input id="course_link" type="text" placeholder="Link" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <button
+                    type="button"
+                    id="create_course_btn" 
+                    class="card-btn" 
+                    style="background-color: rgb(20, 163, 219); padding: 15px 20px !important; width: 100%; margin-top: 20px;"
+                >
+                    CRIAR CURSO
+                </button>
+            </div>
+        </div>
+    </dialog>
+
     <script>
 
-        const modal = document.querySelector('#visit_dialog');
+        const addCourseButton = document.querySelector(".add-course");
 
-        const modalCloseBtn = document.querySelector('.modal-close-btn');
+        addCourseButton.addEventListener("click", () => {
+            const modal = document.querySelector("#create_course_dialog");
+            modal.showModal();
+        });
 
-        modalCloseBtn.addEventListener('click', () => modal.close());
+        const createCourseBtn = document.querySelector("#create_course_btn");
+
+        createCourseBtn.addEventListener("click", async (e) => {
+
+            const courseName = document.querySelector("#course_name").value;
+            const courseDescription = document.querySelector("#course_description").value;
+            const courseImage = document.querySelector("#course_image").files[0];
+            const courseLink = document.querySelector("#course_link").value;
+
+            if(!courseName || !courseDescription || !courseImage || !courseLink){
+                alert("Preencha todos os campos");
+                return;
+            }
+
+            // add course to the grid
+            const cardGrid = document.querySelector(".card-grid");
+
+            const card = document.createElement("div");
+
+            card.classList.add("card");
+
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(courseImage);
+
+            card.innerHTML = `
+                <div class="card-content">
+                    <h3>
+                        ${courseName}
+                    </h3>
+
+                    <p class="card-text">
+                        ${courseDescription}
+                    </p>
+                    
+                    <button class="card-btn">
+                        Ver curso
+                    </button>
+                </div>
+            `;
+
+            card.prepend(img);
+
+            const lastCard = cardGrid.children[cardGrid.children.length - 1];
+            cardGrid.insertBefore(card, lastCard);
+
+            //clear inputs
+            courseName.value = "";
+            courseDescription.value = "";
+            courseImage.value = "";
+            courseLink.value = "";
+
+            const modal = document.querySelector("#create_course_dialog");
+            modal.close();
+        });
+
+
+        //-----
+
+        document.querySelectorAll('.modal-close-btn').forEach((btn) => {
+            btn.addEventListener('click', function() {
+                // get the dialog that is the parent of the close button
+                const dialog = this.closest('dialog');
+                if(dialog){
+                    dialog.close();
+                }
+            });
+        });
 
         //------
+
+        const modal = document.querySelector('#visit_dialog');
 
         document.addEventListener("DOMContentLoaded", () => {
             if (!localStorage.getItem("modal_shown")) {
@@ -818,6 +922,8 @@
                 localStorage.setItem("modal_shown", "true");
             }
         });
+
+        //------
 
         const prevSlideBtn = document.querySelector(".prev");
 
