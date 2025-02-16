@@ -874,6 +874,18 @@
                 return;
             }
 
+            const formData = new FormData();
+            formData.append("name", courseName);
+            formData.append("description", courseDescription);
+            formData.append("image", courseImage);
+            formData.append("link", courseLink);
+
+            const result = await saveCourse(formData);
+
+            if(!result){
+                return;
+            }
+
             // add course to the grid
             const cardGrid = document.querySelector(".card-grid");
 
@@ -915,6 +927,38 @@
             modal.close();
         });
 
+        //-----
+
+        async function saveCourse(course){
+            
+            try {
+                // save course to the database
+                const response = await fetch("http://localhost:8080/courses", {
+                    method: "POST",
+                    body: course
+                }); 
+
+            
+                if(!response.ok){
+                    alert("Erro ao salvar curso");
+                    return false;
+                }
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if(!data.status){
+                    alert(data.message);
+                    return false;
+                }
+            }
+            catch (error) {
+                console.error(error);
+                return false;
+            }
+
+        }
 
         //-----
 
