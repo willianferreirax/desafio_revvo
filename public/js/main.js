@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     courses = await getCourses();
 
     buildCourseGrid(courses);
+
+    buildSlider(courses.filter(course => course.should_show_on_slider === 1));
 });
 
 document.querySelectorAll('.modal-close-btn').forEach((btn) => {

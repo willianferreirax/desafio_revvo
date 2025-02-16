@@ -169,6 +169,8 @@ body {
     transition: 0.3s;
     position: relative;
     margin-top: auto;
+    text-decoration: none;
+    text-align: center;
 }
 
 .slide-btn {
@@ -252,7 +254,7 @@ body {
     padding-right: 70px;
     padding-top: 50px;
     padding-bottom: 50px;
-    background-color: antiquewhite;
+    background-color: #eeeeee;
 }
 
 .card-grid {
@@ -318,7 +320,7 @@ body {
 }
 
 .sub-footer {
-    background-color: antiquewhite;
+    background-color: #eeeeee;
     padding-left: 70px;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -364,9 +366,9 @@ body {
 dialog {
     border: 0;
     border-radius: 10px;
-    width: 70vw;
+    width: 50vw;
     position: fixed;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -70%);
     overflow: visible;
@@ -419,6 +421,12 @@ dialog::backdrop {
     width: 100px;
 }
 
+.courses-header{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
 @media (max-width: 1024px) {
 
     .dots-container {
@@ -451,6 +459,11 @@ dialog::backdrop {
 
     html {
         font-size: 12px;
+    }
+
+    .courses-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .header {
@@ -567,9 +580,11 @@ dialog::backdrop {
         width: 70%;
     }
 
-    dialog {
+    dialog,
+    #create_course_dialog {
         width: 90vw;
         transform: translate(-50%, -50%);
+        top: 50%;
     }
 
     .modal-close-btn {

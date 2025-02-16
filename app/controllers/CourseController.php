@@ -40,8 +40,28 @@ class CourseController
             return DefaultResponse::json(false, "Course image is required");
         }
 
+        if(isset($data['should_show_slide']) && $data['should_show_slide'] === 'true') {
+            if (!isset($_FILES['slide_image']) || $_FILES['slide_image']['error'] !== UPLOAD_ERR_OK) {
+                return DefaultResponse::json(false, "Slide image is required if slide is to be shown");
+            }
+        }
+
+        if (isset($_FILES['slide_image']) && $_FILES['slide_image']['error'] !== UPLOAD_ERR_OK) {
+            return DefaultResponse::json(false, "Error uploading slide image");
+        }
+
+        if(isset($_FILES['slide_image']) && $_FILES['slide_image']['error'] === UPLOAD_ERR_OK) {
+            
+            try{
+                $slideImageName = $this->handleFile($_FILES['slide_image']);
+            } catch (Exception $e) {
+                return DefaultResponse::json(false, $e->getMessage());
+            }
+
+        }
+
         try {
-            $fileName = $this->handleFile($_FILES);
+            $fileName = $this->handleFile($_FILES['image']);
         } catch (Exception $e) {
             return DefaultResponse::json(false, $e->getMessage());
         }
@@ -52,11 +72,13 @@ class CourseController
                     $data['name'],
                     $data['description'],
                     $data['link'],
-                    $fileName
+                    $fileName,
+                    isset($slideImageName) ? $slideImageName : null,
+                    isset($data['should_show_slide']) && $data['should_show_slide'] == 'true' ? 1 : 0
                 )
             );
         } catch (Exception $e) {
-            return DefaultResponse::json(false, "Failed to create course");
+            return DefaultResponse::json(false, "Failed to create course" . $e->getMessage());
         }
 
         if (!$created) {
@@ -84,7 +106,9 @@ class CourseController
             'name' => $courseData['name'],
             'description' => $courseData['description'],
             'link' => $courseData['slide_link'],
-            'image_url' => $courseData['img_url']
+            'image_url' => $courseData['img_url'],
+            'slide_url' => $courseData['slide_img_url'],
+            'should_show_slide' => $courseData['should_show_on_slider']
         ]);
 
         if (isset($data['name'])) {
@@ -115,11 +139,31 @@ class CourseController
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             try {
-                $fileName = $this->handleFile($_FILES);
+                $fileName = $this->handleFile($_FILES['image']);
                 $courseDto->image_url = $fileName;
             } catch (Exception $e) {
                 return DefaultResponse::json(false, $e->getMessage());
             }
+        }
+
+        if(isset($data['should_show_slide']) && $data['should_show_slide'] === 'true' && !$courseData['slide_img_url']) {
+            if (!isset($_FILES['slide_image']) || $_FILES['slide_image']['error'] !== UPLOAD_ERR_OK) {
+                return DefaultResponse::json(false, "Slide image is required if slide is to be shown", $courseData);
+            }
+        }
+
+        if (isset($_FILES['slide_image']) && $_FILES['slide_image']['error'] === UPLOAD_ERR_OK) {
+            try {
+                $slideImageName = $this->handleFile($_FILES['slide_image']);
+                $courseDto->slide_url = $slideImageName;
+                $courseDto->should_show_slide = 1;
+            } catch (Exception $e) {
+                return DefaultResponse::json(false, $e->getMessage());
+            }
+        }
+
+        if (isset($data['should_show_slide'])) {
+            $courseDto->should_show_slide = $data['should_show_slide'] == 'true' ? 1 : 0;
         }
 
         $course = $this->course->update($id, $courseDto);
@@ -164,12 +208,20 @@ class CourseController
             unlink($imagePath);
         }
 
+        if($model['slide_img_url']) {
+            $slideImagePath = __DIR__ . "/../../public/" . $model['slide_img_url'];
+
+            if (file_exists($slideImagePath)){
+                unlink($slideImagePath);
+            }
+        }
+
         return DefaultResponse::json(true, "Course deleted successfully");
     }
 
     private function handleFile($file){
-        $fileSize = $file['image']['size'];
-        $fileType = $file['image']['type'];
+        $fileSize = $file['size'];
+        $fileType = $file['type'];
 
         if ($fileSize > 10000000) {
             throw new Exception("File size must be less than 10MB");
@@ -179,7 +231,7 @@ class CourseController
             throw new Exception("File type must be jpeg or png");
         }
 
-        $fileTmpPath = $file['image']['tmp_name'];
+        $fileTmpPath = $file['tmp_name'];
 
         $destinationDir = __DIR__ . "/../../public/images/";
 
@@ -187,7 +239,7 @@ class CourseController
             mkdir($destinationDir, 0777, true);
         }
 
-        $fileName = $file['image']['name'];
+        $fileName = $file['name'];
 
         $fileName = uniqid() . $fileName;
 

@@ -62,30 +62,8 @@
     </header>
 
     <div class="slider-container">
-        <div class="slider">
-            <div class="slide">
-                <img src="defaultImages/home.jpg" alt="" class="slide-image" />
-                <div class="text-box">
-                    <h2 class="slide-title">Titulo</h2>
-                    <p class="slide-text">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus dolor ad nostrum fugit ipsum voluptatibus et mollitia asperiores voluptatem corrupti.  
-                    </p>
 
-                    <button class="slide-btn">Ver curso</button>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="defaultImages/home-modal.jpg" alt="" class="slide-image" />
-                <div class="text-box">
-                    <h2 class="slide-title">Titulo</h2>
-                    <p class="slide-text">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus dolor ad nostrum fugit ipsum voluptatibus et mollitia asperiores voluptatem corrupti.  
-                    </p>
-
-                    <button class="slide-btn">Ver curso</button>
-                </div>
-            </div>
-        </div>
+        <div class="slider"></div>
 
         <button class="prev">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="white">
@@ -104,7 +82,17 @@
     </div>
 
     <div class="course-container">
-        <h1>MEUS CURSOS</h1>
+        <div class="courses-header">
+            <h1>MEUS CURSOS</h1>
+
+            <button
+                id="create_course_modal_btn"
+                class="card-btn"
+                style="padding: 15px 20px !important; width: 200px; margin-top: 20px;"
+            >
+                CRIAR CURSO
+            </button>
+        </div>
 
         <hr style="margin-top: 10px" />
 
@@ -226,10 +214,35 @@
                 Crie seu curso
             </h3>
             <div>
-                <input id='course_name' type="text" placeholder="Nome do curso" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <input id="course_description" type="text" placeholder="Descrição" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <input id="course_image" type="file" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <input id="course_link" type="text" placeholder="Link" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <label for="course_name" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Nome do curso
+                </label>
+                <input id='course_name' type="text" placeholder="Nome do curso" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="course_description" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Descrição
+                </label>
+                <input id="course_description" type="text" placeholder="Descrição" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="course_image" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Imagem do curso
+                </label>
+                <input id="course_image" type="file" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="course_slide_image" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Imagem slide
+                </label>
+                <input id="course_slide_image" type="file" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="course_should_show_slide" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Mostrar no slide
+                </label>
+                <input type="checkbox" id="course_should_show_slide" style="margin-top: 10px;">
+
+                <label for="course_image" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Link do curso
+                </label>
+                <input id="course_link" type="text" placeholder="Link" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
                 
                 <button
                     type="button"
@@ -263,10 +276,35 @@
                 </div>
             </div>
             <div>
-                <input id='edit_course_name' type="text" placeholder="Nome do curso" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <input id="edit_course_description" type="text" placeholder="Descrição" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <input id="edit_course_image" type="file" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <input id="edit_course_link" type="text" placeholder="Link" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <label for="edit_course_name" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Nome do curso
+                </label>
+                <input id='edit_course_name' type="text" placeholder="Nome do curso" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="edit_course_description" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Descrição
+                </label>
+                <input id="edit_course_description" type="text" placeholder="Descrição" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="edit_course_image" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Imagem do curso
+                </label>
+                <input id="edit_course_image" type="file" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <label for="edit_course_slide_image" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Imagem slide
+                </label>
+                <input id="edit_course_slide_image" type="file" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+                <label for="edit_course_should_show_slide" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Mostrar no slide
+                </label>
+                <input type="checkbox" id="edit_course_should_show_slide" style="margin-top: 10px;">
+
+                <label for="edit_course_image" style="display: block; margin-top: 20px; font-size: 1rem; color: #333;">
+                    Link do curso
+                </label>
+                <input id="edit_course_link" type="text" placeholder="Link" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;">
                 
                 <button
                     type="button"
@@ -280,8 +318,8 @@
         </div>
     </dialog>
 
-    <script src="js/course.js"></script>
     <script src="js/slider.js"></script>
+    <script src="js/course.js"></script>
     <script src="js/main.js"></script>
 
 </body>

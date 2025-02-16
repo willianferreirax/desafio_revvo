@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS courses (
   name varchar(255) NOT NULL,
   description text NOT NULL,
   img_url varchar(255) NOT NULL,
+  slide_img_url varchar(255) NULL,
   slide_link varchar(255) NOT NULL,
   should_show_on_slider tinyint(1) NOT NULL DEFAULT '0',
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

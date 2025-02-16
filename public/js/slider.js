@@ -1,10 +1,19 @@
 let currentSlide = 0;
 
-const slides = document.querySelectorAll(".slide");
+var slides = null;
+var dots = null;
 
+getSlidesElements();
 generateDots();
+getDotsElements();
 
-const dots = document.querySelectorAll(".dot");
+function getSlidesElements(){
+    slides = document.querySelectorAll(".slide");
+}
+
+function getDotsElements(){
+    dots = document.querySelectorAll(".dot");
+}
 
 const prevSlideBtn = document.querySelector(".prev");
 
@@ -17,6 +26,9 @@ nextSlideBtn.addEventListener("click", () => changeSlide(1));
 function generateDots(){
 
     const dotsContainer = document.querySelector(".dots-container");
+
+    //clear dots
+    dotsContainer.innerHTML = "";
 
     slides.forEach((_, index) => {
         const dot = document.createElement("span");
@@ -60,6 +72,9 @@ function showSlide(index) {
 }
 
 function nextSlide() {
+
+    if(slides.length == 0) return;
+
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
     updateDots();

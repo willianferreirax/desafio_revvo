@@ -20,16 +20,18 @@ class Course
     {
         $stmt = $this->pdo->prepare("
             INSERT INTO courses 
-                (name, description, slide_link, img_url) 
+                (name, description, slide_link, img_url, slide_img_url, should_show_on_slider) 
             VALUES 
-                (?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?)
         ");
         
         $result = $stmt->execute([
             $courseDTO->name,
             $courseDTO->description,
             $courseDTO->link,
-            $courseDTO->image_url
+            $courseDTO->image_url,
+            $courseDTO->slide_url,
+            $courseDTO->should_show_slide
         ]);
 
         if (!$result) {
@@ -48,7 +50,9 @@ class Course
                 name = ?, 
                 description = ?,
                 slide_link = ?,
-                img_url = ?
+                img_url = ?,
+                slide_img_url = ?,
+                should_show_on_slider = ?
             WHERE id = ?
         ");
         return $stmt->execute([
@@ -56,6 +60,8 @@ class Course
             $courseDTO->description,
             $courseDTO->link,
             $courseDTO->image_url,
+            $courseDTO->slide_url,
+            $courseDTO->should_show_slide,
             $id
         ]);
     }
