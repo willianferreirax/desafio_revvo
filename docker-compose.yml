@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: php_apache
+    ports:
+      - "${APACHE_PORT}:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - revvo_net
+
+  db:
+    image: mysql:5.7
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: revvo_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql:docker-entrypoint-initdb.d
+    networks:
+      - revvo_net
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  revvo_net:
+    driver: bridge
