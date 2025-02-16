@@ -63,7 +63,7 @@ class CourseController
             return DefaultResponse::json(false, "Failed to create course");
         }
 
-        return DefaultResponse::json(true, "Course created successfully");
+        return DefaultResponse::json(true, "Course created successfully", ['id' => $created]);
     }
 
     public function edit($id, $data)
@@ -189,6 +189,6 @@ class CourseController
             throw new Exception("Failed to upload file");
         }
 
-        return $fileName;
+        return 'public/images/' . $fileName;
     }
 }

@@ -24,12 +24,19 @@ class Course
             VALUES 
                 (?, ?, ?, ?)
         ");
-        return $stmt->execute([
+        
+        $result = $stmt->execute([
             $courseDTO->name,
             $courseDTO->description,
             $courseDTO->link,
             $courseDTO->image_url
         ]);
+
+        if (!$result) {
+            return false;
+        }
+
+        return $this->pdo->lastInsertId();
     }
 
     public function update($id, CourseDTO $courseDTO)
