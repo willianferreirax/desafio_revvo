@@ -851,6 +851,43 @@
         </div>
     </dialog>
 
+    <dialog id="edit_course_dialog" style=" overflow: visible;">
+        <div class="modal-close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
+                <path fill="#FA8072" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+                <path fill="#FA8072" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+        </div>
+        <div style="padding: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1.5rem; color: #333;">
+                    Editar seu curso
+                </h3>
+
+                <div>
+                    <button id="delete_course_btn" class="card-btn" style="background-color: red; padding: 15px 20px !important; width: 100%;">
+                        DELETAR
+                    </button>
+                </div>
+            </div>
+            <div>
+                <input id='edit_course_name' type="text" placeholder="Nome do curso" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <input id="edit_course_description" type="text" placeholder="Descrição" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <input id="edit_course_image" type="file" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <input id="edit_course_link" type="text" placeholder="Link" style="width: 100%; padding: 10px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <button
+                    type="button"
+                    id="edit_course_btn" 
+                    class="card-btn" 
+                    style="background-color: rgb(20, 163, 219); padding: 15px 20px !important; width: 100%; margin-top: 20px;"
+                >
+                    EDITAR CURSO
+                </button>
+            </div>
+        </div>
+    </dialog>
+
     <script>
 
         const addCourseButton = document.querySelector(".add-course");
