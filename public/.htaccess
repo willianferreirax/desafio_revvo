@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Serve static files (CSS, JS, Images) correctly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Redirect root to index.html (Frontend)
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^ index.html [L]
+
+# Redirect API calls to index.php
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteRule ^ api/routes.php [L]
+
+# Ensure PHP handles all other requests
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ routes.php [L]

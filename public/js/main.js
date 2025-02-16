@@ -1,10 +1,10 @@
 var courses = [];
 
-const modal = document.querySelector('#visit_dialog');
+const modalVisit = document.querySelector('#visit_dialog');
 
 document.addEventListener("DOMContentLoaded", async () => {
     if (!localStorage.getItem("modal_shown")) {
-        modal.showModal();
+        modalVisit.showModal();
         localStorage.setItem("modal_shown", "true");
     }
 

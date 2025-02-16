@@ -38,36 +38,13 @@ createCourseBtn.addEventListener("click", async (e) => {
         return;
     }
 
-    // add course to the grid
-    const cardGrid = document.querySelector(".card-grid");
-
-    const card = document.createElement("div");
-
-    card.classList.add("card");
-
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(courseImage.files[0]);
-
-    card.innerHTML = `
-        <div class="card-content">
-            <h3>
-                ${courseNameValue}
-            </h3>
-
-            <p class="card-text">
-                ${courseDescriptionValue}
-            </p>
-            
-            <button class="card-btn">
-                Ver curso
-            </button>
-        </div>
-    `;
-
-    card.prepend(img);
-
-    const lastCard = cardGrid.children[cardGrid.children.length - 1];
-    cardGrid.insertBefore(card, lastCard);
+    addCourseToGrid({
+        id: result,
+        name: courseNameValue,
+        description: courseDescriptionValue,
+        image: courseImageValue,
+        link: courseLinkValue
+    }, true);
     
     //clear inputs
     courseName.value = "";
@@ -109,13 +86,13 @@ editCourseBtn.addEventListener("click", async (e) => {
 
     const id = e.currentTarget.dataset.id;
 
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+
     const result = await editCourse(id, formData);
 
     if(!result){
         return;
     }
-
-    const card = document.querySelector(`.card[data-id="${id}"]`);
 
     updateCardOnGrid(card, {
         name: courseNameValue,
@@ -186,8 +163,10 @@ async function getCourses(){
 async function editCourse(id, course){
 
     try {
+        course.append("_method", "PUT");
+
         const response = await fetch(`http://localhost:8080/courses/${id}`, {
-            method: "PUT",
+            method: "POST",
             body: course
         });
 
@@ -202,6 +181,8 @@ async function editCourse(id, course){
             alert(data.message);
             return false;
         }
+
+        return true
 
     } catch (error) {
         console.error(error);
@@ -226,6 +207,8 @@ async function deleteCourse(id){
             alert(data.message);
             return false;
         }
+
+        return true;
 
     } catch (error) {
         console.error(error);
@@ -274,7 +257,7 @@ function buildCourseGrid(courses){
     });
 }
 
-function addCourseToGrid(){
+function addCourseToGrid(course, addRibbon = false){
 
     const cardGrid = document.querySelector(".card-grid");
 
@@ -283,16 +266,16 @@ function addCourseToGrid(){
     card.classList.add("card");
 
     const img = document.createElement("img");
-    img.src = URL.createObjectURL(courseImage);
+    img.src = URL.createObjectURL(course.image);
 
     card.innerHTML = `
         <div class="card-content">
             <h3>
-                ${courseName}
+                ${course.name}
             </h3>
 
             <p class="card-text">
-                ${courseDescription}
+                ${course.description}
             </p>
             
             <button class="card-btn">
@@ -303,11 +286,18 @@ function addCourseToGrid(){
 
     card.prepend(img);
 
-    const ribbon = document.createElement("span");
-    ribbon.classList.add("ribbon");
-    ribbon.textContent = "Novo";
+    card.dataset.id = course.id;
+    card.dataset.name = course.name;
+    card.dataset.description = course.description;
+    card.dataset.link = course.slide_link;  
 
-    card.prepend(ribbon);
+    if(addRibbon){
+        const ribbon = document.createElement("span");
+        ribbon.classList.add("ribbon");
+        ribbon.textContent = "Novo";
+
+        card.prepend(ribbon);
+    }
 
     addCardEditEventListener(card);
 
@@ -318,6 +308,8 @@ function addCourseToGrid(){
 function addCardEditEventListener(card){
     card.addEventListener("click", (e) => {
 
+        console.log(card);
+
         const modal = document.querySelector("#edit_course_dialog");
 
         const courseName = document.querySelector("#edit_course_name");
@@ -326,6 +318,9 @@ function addCardEditEventListener(card){
 
         const deleteCourseBtn = document.querySelector("#delete_course_btn");
         deleteCourseBtn.dataset.id = card.dataset.id;
+
+        const editCourseBtn = document.querySelector("#edit_course_btn");
+        editCourseBtn.dataset.id = card.dataset.id;
 
         courseName.value = card.dataset.name;
         courseDescription.value = card.dataset.description;
@@ -367,4 +362,7 @@ document.querySelector("#delete_course_btn").addEventListener("click", async (e)
     const card = document.querySelector(`.card[data-id="${id}"]`);
 
     removeCardFromGrid(card);
+
+    const modal = document.querySelector("#edit_course_dialog");
+    modal.close();
 });

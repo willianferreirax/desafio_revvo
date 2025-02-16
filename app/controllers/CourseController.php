@@ -80,10 +80,14 @@ class CourseController
             return DefaultResponse::json(false, "Course not found", [], 404);
         }
 
-        $courseDto = CourseDTO::fromArray($courseData);
+        $courseDto = CourseDTO::fromArray([
+            'name' => $courseData['name'],
+            'description' => $courseData['description'],
+            'link' => $courseData['slide_link'],
+            'image_url' => $courseData['img_url']
+        ]);
 
         if (isset($data['name'])) {
-
             if (empty($data['name'])) {
                 return DefaultResponse::json(false, "Name is required");
             }
@@ -140,7 +144,10 @@ class CourseController
 
     public function destroy($id)
     {
-        if ($this->course->exists($id) === false) {
+
+        $model = $this->course->findById($id);
+
+        if (!$model) {
             return DefaultResponse::json(false, "Course not found", [], 404);
         }
 
@@ -148,6 +155,13 @@ class CourseController
 
         if (!$deleted) {
             return DefaultResponse::json(false, "Failed to delete course");
+        }
+
+        // delete image
+        $imagePath = __DIR__ . "/../../public/" . $model['img_url'];
+
+        if (file_exists($imagePath)){
+            unlink($imagePath);
         }
 
         return DefaultResponse::json(true, "Course deleted successfully");
@@ -189,6 +203,6 @@ class CourseController
             throw new Exception("Failed to upload file");
         }
 
-        return 'public/images/' . $fileName;
+        return 'images/' . $fileName;
     }
 }
